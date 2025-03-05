@@ -85,5 +85,22 @@ def main():
             history.append((x, y, reward))
         env.reset()
 
+        # 매 에피소드가 끝나고 바로 해당 데이터를 이용해 테이블을 업데이트
+        cum_reward = 0
+        for transition in history[::-1]:
+            # 방문했던 상태들을 뒤에서부터 보며 차례차례 리턴을 계산
+            x, y, reward = transition
+            data[x][y] = data[x][y] + alpha*(cum_reward - data[x][y])
+            cum_reward = cum_reward + gamma * reward
+
+    # 학습이 끝나고 난 후 데이터를 출력해보기 위한 코드
+    for row in data:
+        print(row)
+
+if __name__ == '__main__':
+    main()
+
+
+
 
 
