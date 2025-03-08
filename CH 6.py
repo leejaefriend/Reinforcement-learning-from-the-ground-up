@@ -70,8 +70,19 @@ class GridWorld():
 
 class QAgent():
     def __init__(self):
-        self.q_table = np.zeros((5, 7, 4))
+        self.q_table = np.zeros((5, 7, 4)) # q밸류를 저장하는 변수, 모두 0으로 초기화
         self.eps = 0.9
         self.alpha = 0.01
+
+    def select_action(self, s):
+        # eps-greedy로 액션을 선택해준다
+        x, y = s
+        coin = random.random()
+        if coin < self.eps:
+            action = random.randint(0, 3)
+        else:
+            action_val = self.q_table[x, y, :]
+            action = np.argmax(action_val)
+        return action
 
 
